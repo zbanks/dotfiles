@@ -1,0 +1,26 @@
+Django
+-e git+https://github.com/django-debug-toolbar/django-debug-toolbar.git#egg=django_debug_toolbar-master
+Flask
+Werkzeug
+argparse
+beautifulsoup4
+billiard
+celery
+chardet
+django-extensions
+evdev
+httpie
+httplib2
+ipython
+lxml
+matplotlib
+numpy
+pandas
+pyserial
+requests
+scipy
+six
+tornado
+urllib3
+virtualenv
+websocket
