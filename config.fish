@@ -11,3 +11,6 @@ end
 
 fish_vi_cursor
 
+set -x EDITOR vim
+set -x VISUAL vim
+
