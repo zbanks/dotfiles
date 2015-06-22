@@ -24,6 +24,15 @@ fe80::1%lo0     ads.youtube.com
 127.0.0.1 cdn.cpmstar.com
 127.0.0.1 cpmstar.com
 127.0.0.1 b.scorecardresearch.com
+127.0.0.1 ad.directrev.com
+fe80:1%lo0 ad.directrev.com
+127.0.0.1 cdn.directrev.com
+fe80:1%lo0 cdn.directrev.com
+127.0.0.1 s7.addthis.com
+127.0.0.1 m.addthis.com
+127.0.0.1 creative.wwwpromoter.com
+127.0.0.1 az708531.vo.msecnd.net
+127.0.0.1 jsc.dt07.net
 
 # block ads on tpb
 127.0.0.1 syndication.exoclick.com
@@ -32,6 +41,14 @@ fe80::1%lo0     ads.youtube.com
 127.0.0.1 cdn.adbrau.com
 127.0.0.1 static-ssl.exoclick.com
 127.0.0.1 mail-today-news.com
+
+# block ads on kat
+127.0.0.1 a.kat.cr
+127.0.0.1 jsc.mgid.com
+127.0.0.1 aa-gb.mgid.com
+127.0.0.1 ab-gb.mgid.com
+127.0.0.1 ab-nb.mgid.com
+
 
 # Block Facebook IPv4
 127.0.0.1     facebook.com
