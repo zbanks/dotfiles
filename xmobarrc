@@ -1,0 +1,107 @@
+Config { 
+
+   -- appearance
+     font =         "xft:Bitstream Vera Sans Mono:size=9:antialias=true"
+   , bgColor =      "#babdb6" -- aluminum 2
+   , fgColor =      "#2e3436" -- aluminum 6
+   , position =     Top
+   , border =       BottomB
+   , borderColor =  "#555753" -- aluminum 5
+
+   -- layout
+   , sepChar =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"  -- separator between left-right alignment
+   , template = "%battery% | %multicpu% %coretemp% | %memory% | %top% }{ %KBOS% | %wlan0wi% | %date% "
+
+   -- general behavior
+   , lowerOnStart =     False    -- send to bottom of window stack on start
+   , hideOnStart =      False   -- start with window unmapped (hidden)
+   , allDesktops =      True    -- show on all desktops
+   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , pickBroadest =     False   -- choose widest display (multi-monitor)
+   , persistent =       True    -- enable/disable hiding (True = disabled)
+
+   -- plugins
+   --   Numbers can be automatically colored according to their value. xmobar
+   --   decides color based on a three-tier/two-cutoff system, controlled by
+   --   command options:
+   --     --Low sets the low cutoff
+   --     --High sets the high cutoff
+   --
+   --     --low sets the color below --Low cutoff
+   --     --normal sets the color between --Low and --High cutoffs
+   --     --High sets the color above --High cutoff
+   --
+   --   The --template option controls how the plugin is displayed. Text
+   --   color can be set by enclosing in <fc></fc> tags. For more details
+   --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
+   , commands = 
+
+    -- weather monitor
+    [ Run Weather "KBOS" [ "--template", "Weather: <skyCondition> <fc=#204a87><tempF></fc>°F <fc=#204a87><rh></fc>% " -- sky blue dark
+                            ] 36000
+
+    -- network activity monitor (dynamic interface resolution)
+    , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
+                            , "--Low"      , "50000"        -- units: kB/s
+                            , "--High"     , "100000"       -- units: kB/s
+                            , "--low"      , "#4E9A06" -- tango dark green
+                            , "--normal"   , "#f57900" -- tango orange
+                            , "--high"     , "#CC0000" -- tango scarlet red 
+                            , "-m"         , "4"
+                            ] 10
+    , Run TopProc        [ "--template", "Top: <both1>%; <mboth1>" ] 10
+
+    -- cpu activity monitor
+    , Run MultiCpu       [ "--template" , "Cpu: <total0>% <total1>% <total2>% <total3>%"
+                            , "--Low"      , "50"         -- units: %
+                            , "--High"     , "85"         -- units: %
+                            , "--low"      , "#4E9A06" -- tango dark green
+                            , "--normal"   , "#f57900" -- tango orange
+                            , "--high"     , "#CC0000" -- tango scarlet red 
+                            , "-p"         , "3"
+                            ] 10
+
+    -- cpu core temperature monitor
+    , Run CoreTemp       [ "--template" , "<core0>°C"
+                            , "--Low"      , "70"        -- units: °C
+                            , "--High"     , "80"        -- units: °C
+                            , "--low"      , "#4E9A06" -- tango dark green
+                            , "--normal"   , "#f57900" -- tango orange
+                            , "--high"     , "#CC0000" -- tango scarlet red 
+                            ] 50
+                        
+    -- memory usage monitor
+    , Run Memory         [ "--template" ,"Mem: <usedratio>%"
+                            , "--Low"      , "20"        -- units: %
+                            , "--High"     , "90"        -- units: %
+                            , "--low"      , "#4E9A06" -- tango dark green
+                            , "--normal"   , "#f57900" -- tango orange
+                            , "--high"     , "#CC0000" -- tango scarlet red 
+                            ] 10
+
+    -- battery monitor
+    , Run Battery        [ "--template" , "Batt: <acstatus>"
+                            , "--Low"      , "15"        -- units: %
+                            , "--High"     , "50"        -- units: %
+                            , "--high"     , "#4E9A06" -- tango dark green
+                            , "--normal"   , "#f57900" -- tango orange
+                            , "--low"      , "#CC0000" -- tango scarlet red 
+
+                            , "--" -- battery specific options
+                                    -- discharging status
+                                    , "-o"   , "<left>% (<timeleft>)"
+                                    -- AC "on" status
+                                    , "-O"   , "<fc=#dAA520>Charging</fc>"
+                                    -- charged status
+                                    , "-i"   , "<fc=#A0FFA0>Charged</fc>"
+                            ] 50
+
+    -- time and date indicator 
+    --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
+    , Run Date           "<fc=#555753>%F (%a) %T</fc>" "date" 10 -- alumnium 4
+
+    , Run Wireless "wlan0" ["--template", "WiFi: <essid> <fc=#888a85><qualityvbar></fc>" ] 100
+    -- aluminum 4
+    ]
+}

@@ -350,7 +350,7 @@ myStartupHook = do
       spawn "xmodmap -e 'remove Lock = Caps_Lock'"
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
-      spawn "gnome-panel"
+      spawn "xmobar"
       spawn "wmname LG3D"
       gnomeRegister
       startupHook desktopConfig 
