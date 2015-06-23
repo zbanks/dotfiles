@@ -1,8 +1,9 @@
 Config { 
 
    -- appearance
-     font =         "xft:Bitstream Vera Sans Mono:size=9:antialias=true"
-   , bgColor =      "#babdb6" -- aluminum 2
+     font =         "xft:DejaVu Sans Mono:size=9:antialias=true"
+   --, bgColor =      "#babdb6" -- aluminum 2
+   , bgColor =      "#d3d7cf" -- aluminum 3
    , fgColor =      "#2e3436" -- aluminum 6
    , position =     Top
    , border =       BottomB
@@ -92,9 +93,9 @@ Config {
                                     -- discharging status
                                     , "-o"   , "<left>% (<timeleft>)"
                                     -- AC "on" status
-                                    , "-O"   , "<fc=#dAA520>Charging</fc>"
+                                    , "-O"   , "<fc=#f57900>Charging</fc>"
                                     -- charged status
-                                    , "-i"   , "<fc=#A0FFA0>Charged</fc>"
+                                    , "-i"   , "<fc=#4E9A06>Charged</fc>"
                             ] 50
 
     -- time and date indicator 
