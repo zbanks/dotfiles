@@ -23,6 +23,7 @@ import XMonad.Layout.Circle
 import XMonad.Layout.Accordion
 import XMonad.Layout.NoBorders
 import Graphics.X11.ExtraTypes.XF86
+import XMonad.Actions.SwapWorkspaces
 
 
 import System.IO
@@ -71,7 +72,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = map show [1..9] ++ ["0", "-", "+"]
+myWorkspaces    = ["web","bash", "vim", "lin","mz","6","7","8","9","0", "-", "=", "~"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -113,8 +114,7 @@ myDzenTitleBar =
  
 -- dmenu patched and compiled locally to add xft support
 myDmenuTitleBar =
-    "exec `dmenu\
-        \ -p 'Run:'\
+    "exec `dmenu_run \
         \ -i\
         \ -bh " ++ barHeight  ++ "\
         \ -nb " ++ background ++ "\
@@ -134,7 +134,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm              , xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm              , xK_p     ), spawn "exe=`dmenu` && eval \"exec $exe\"")
+    --, ((modm              , xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm              , xK_p     ), spawn "dmenu_run")
 
     -- launch gnome-do
     --, ((modm              , xK_p     ), spawn "gnome-do")
@@ -143,9 +144,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_c     ), kill)
     
     -- Musicazoo
-    , ((shiftMask, xF86XK_AudioRaiseVolume    ), spawn "curl 'http://musicazoo.mit.edu/nlp?q=vol+up' > /dev/null")
-    , ((shiftMask, xF86XK_AudioLowerVolume    ), spawn "curl 'http://musicazoo.mit.edu/nlp?q=vol+down' > /dev/null")
-    , ((shiftMask, xF86XK_AudioMute    ), spawn "curl 'http://musicazoo.mit.edu/nlp?q=stfu' > /dev/null")
+    , ((shiftMask, xF86XK_AudioRaiseVolume    ), spawn "mz vol up > /dev/null")
+    , ((shiftMask, xF86XK_AudioLowerVolume    ), spawn "mz vol down > /dev/null")
+    , ((shiftMask, xF86XK_AudioMute    ), spawn "mz skip > /dev/null")
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -210,7 +211,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_o    ), spawn myDmenuTitleBar)
 
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    --, ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_q     ), spawn "gnome-terminal -x sh -c 'vim ~/.xmonad/xmonad.hs'")
 
     -- Restart xmonad
     , ((modm              , xK_q     ), restart "xmonad" True)
@@ -222,8 +224,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-shift-[1..9], Move client to workspace N
     --
     [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9]++[xK_0, xK_minus, xK_equal])
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9]++[xK_0, xK_minus, xK_equal, xK_grave])
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
 
     --
@@ -234,6 +236,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
+    ++
+    [((modm .|. controlMask, k), windows $ swapWithCurrent i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 ..]]
+
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -241,17 +247,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((bmask, button1), (\w -> focus w >> mouseMoveWindow w))
+    [ ((modMask .|. shiftMask, button1), (\w -> focus w >> mouseMoveWindow w))
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((bmask, button2), (\w -> focus w >> windows W.swapMaster))
+    , ((modMask .|. shiftMask, button2), (\w -> focus w >> windows W.swapMaster))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((bmask, button3), (\w -> focus w >> mouseResizeWindow w))
+    , ((modMask .|. shiftMask, button3), (\w -> focus w >> mouseResizeWindow w))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
-  where bmask = modMask .|. shiftMask
 
 ------------------------------------------------------------------------
 -- Layouts:
@@ -263,10 +268,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
--- 
--- Always keep borders with multiple monitors
---myLayout = avoidStruts ( smartBorders tiled ||| Mirror tiled ||| noBorders Full)
-myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
+--
+myLayout = avoidStruts ( smartBorders tiled ||| Mirror tiled ||| noBorders Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -351,7 +354,6 @@ myStartupHook = do
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
       spawn "xmobar"
-      spawn "wmname LG3D"
       gnomeRegister
       startupHook desktopConfig 
 
