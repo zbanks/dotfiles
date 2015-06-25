@@ -1,7 +1,7 @@
 Config { 
 
    -- appearance
-     font =         "xft:DejaVu Sans Mono:size=9:antialias=true"
+     font =         "xft:DejaVu Sans Mono:size=8:antialias=true"
    --, bgColor =      "#babdb6" -- aluminum 2
    , bgColor =      "#d3d7cf" -- aluminum 3
    , fgColor =      "#2e3436" -- aluminum 6
@@ -12,13 +12,13 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%battery% | %multicpu% %coretemp% | %memory% | %top% }{ %KBOS% | %wlan0wi% | %date% "
+   , template = "%battery% | Cpu: %coretemp% %multicpu% | %memory% | %top% }{ Mz: %mz% | %KBOS% | %wlan0wi% | %date% "
 
    -- general behavior
    , lowerOnStart =     False    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
    , allDesktops =      True    -- show on all desktops
-   , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
+   , overrideRedirect = False   -- set the Override Redirect flag (Xlib)
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
@@ -40,7 +40,7 @@ Config {
 
     -- weather monitor
     [ Run Weather "KBOS" [ "--template", "Weather: <skyCondition> <fc=#204a87><tempF></fc>°F <fc=#204a87><rh></fc>% " -- sky blue dark
-                            ] 36000
+                            ] 1000
 
     -- network activity monitor (dynamic interface resolution)
     , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
@@ -50,18 +50,18 @@ Config {
                             , "--normal"   , "#f57900" -- tango orange
                             , "--high"     , "#CC0000" -- tango scarlet red 
                             , "-m"         , "4"
-                            ] 10
-    , Run TopProc        [ "--template", "Top: <both1>%; <mboth1>" ] 10
+                            ] 25
+    , Run TopProc        [ "--template", "Top: <both1>%; <mboth1>" ] 25
 
     -- cpu activity monitor
-    , Run MultiCpu       [ "--template" , "Cpu: <total0>% <total1>% <total2>% <total3>%"
+    , Run MultiCpu       [ "--template" , "<total0>% <total1>% <total2>% <total3>%"
                             , "--Low"      , "50"         -- units: %
                             , "--High"     , "85"         -- units: %
                             , "--low"      , "#4E9A06" -- tango dark green
                             , "--normal"   , "#f57900" -- tango orange
                             , "--high"     , "#CC0000" -- tango scarlet red 
                             , "-p"         , "3"
-                            ] 10
+                            ] 25
 
     -- cpu core temperature monitor
     , Run CoreTemp       [ "--template" , "<core0>°C"
@@ -70,7 +70,7 @@ Config {
                             , "--low"      , "#4E9A06" -- tango dark green
                             , "--normal"   , "#f57900" -- tango orange
                             , "--high"     , "#CC0000" -- tango scarlet red 
-                            ] 50
+                            ] 100
                         
     -- memory usage monitor
     , Run Memory         [ "--template" ,"Mem: <usedratio>%"
@@ -79,7 +79,7 @@ Config {
                             , "--low"      , "#4E9A06" -- tango dark green
                             , "--normal"   , "#f57900" -- tango orange
                             , "--high"     , "#CC0000" -- tango scarlet red 
-                            ] 10
+                            ] 25
 
     -- battery monitor
     , Run Battery        [ "--template" , "Batt: <acstatus>"
@@ -96,13 +96,17 @@ Config {
                                     , "-O"   , "<fc=#f57900>Charging</fc>"
                                     -- charged status
                                     , "-i"   , "<fc=#4E9A06>Charged</fc>"
-                            ] 50
+                            ] 100
 
     -- time and date indicator 
     --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
     , Run Date           "<fc=#555753>%F (%a) %T</fc>" "date" 10 -- alumnium 4
 
-    , Run Wireless "wlan0" ["--template", "WiFi: <essid> <fc=#888a85><qualityvbar></fc>" ] 100
+    --, Run Volume "default" "Master" [] 25
+
+    , Run Wireless "wlan0" ["--template", "WiFi: <essid> <fc=#888a85><qualityvbar></fc>" ] 1000
+
+    , Run Com "mz" ["cur"] "mz" 25
     -- aluminum 4
     ]
 }

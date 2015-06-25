@@ -46,6 +46,15 @@ Xmonad
     - `Shift-Volume` up/down/mute control Musicazoo
 - 3 additional workspaces on `~`, `-`, and `=`
 - Focus follows mouse
-- Based on Gnome, Ubuntu orange boarder
-- Top panel: `gnome-panel`
+- Based on Gnome, Ubuntu orange border
+- Top panel: `xmobar`
+    - Todo: proper integration & reloading; hiding
 - Launcher: `dmenu` at the top (`M-p`)
+
+Xmobar
+------
+`xmobarrc`
+
+- Tango color palette (to match my terminals), dark on light-grey
+- Battery | CPU | Memory | Top ... Weather (KBOS) | WiFi | Date
+- (I really wish xmobar used normal Haskell files to configure!)
