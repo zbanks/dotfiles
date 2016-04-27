@@ -9,4 +9,6 @@ ln -sbi $PWD/xmobarrc ~/.xmobarrc
 
 sudo ln -sbi $PWD/hosts /etc/hosts
 
+sudo apt-get install $(cat apt | tr '\n' ' ')
+sudo apt-get build-dep $(cat apt-build-dep | tr '\n' ' ')
 sudo pip install --upgrade -r requirements.txt
