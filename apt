@@ -1,11 +1,34 @@
+# Programs to install with apt-get
+
+# Basics
 vim
 git
-xmonad
 python-pip
+#fish - build from source
+
+# Desktop Environment
+xmonad
 suckless-tools
 xmobar
-p7zip
+
+# Media
 ffmpeg
 vlc
-npm
+
+# Development
+wireshark
+linux-tools-generic
+ctags
+gcc-arm-none-eabi
+gdb-arm-none-eabi
+
+# EE
 gerbv
+#kicad - get from nightly
+
+# Misc
+npm
+htop
+p7zip
+libusb-1.0-0-dev
+

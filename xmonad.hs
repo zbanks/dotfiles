@@ -212,7 +212,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Quit xmonad
     --, ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    -- Weird shortcuts
     , ((modm .|. shiftMask, xK_q     ), spawn "gnome-terminal -x sh -c 'vim ~/.xmonad/xmonad.hs'")
+    , ((modm .|. shiftMask, xK_g     ), spawn "sleep 0.3; gnome-screenshot --area")
 
     -- Restart xmonad
     , ((modm              , xK_q     ), restart "xmonad" True)

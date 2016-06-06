@@ -126,6 +126,28 @@ fe80::1%lo0 ads.pubmatic.com
 127.0.0.1 www.hosted-pixel.com
 127.0.0.1 pixel.wp.com
 127.0.0.1 platform.twitter.com
+127.0.0.1 pix04.revsci.net
+127.0.0.1 gmtdmp.mookie1.com
+
+# Random additions (ha!)
+127.0.0.1 atdmt.com
+127.0.0.1 ad.atdmt.com
+127.0.0.1 acdn.adnxs.com
+127.0.0.1 adserver.adtechus.com
+127.0.0.1 aka-cdn.adtechus.com
+127.0.0.1 ib.adnxs.com
+127.0.0.1 secure-nym.adnxs.com
+127.0.0.1 us-u.openx.net
+127.0.0.1 us-ads.openx.net
+127.0.0.1 sa.scorecardresearch.com
+127.0.0.1 sb.voicefive.com
+127.0.0.1 www.googleadservices.com
+127.0.0.1 googleadservices.com
+127.0.0.1 c.amazon-adsystem.com
+127.0.0.1 ads.rubiconproject.com
+127.0.0.1 tap-secure.rubiconproject.com
+127.0.0.1 optimize-by.rubiconproject.com
+
 
 # The rest is based on a list from the internet
 
