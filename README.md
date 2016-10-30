@@ -9,7 +9,7 @@ fish
 ----
 `config.fish`
 
-- Use vim keybindings! (Way better than readline vim keybindings, but still not complete...)
+- Use vim keybindings
 - Export `EDITOR=vim`
 
 /etc/hosts
@@ -17,12 +17,19 @@ fish
 `hosts`
 
 - DIY ad blocking and anti-tracking, specifically:
-    - Watch Cartoon Online
-    - The Pirate Bay
     - Reddit
     - Facebook (both facebook.com & facebook ads/tracking)
     - Google Analytics
-    - And a crapton more from a list I found once
+    - And a ton more from a list I found once
+
+apt
+---
+`apt` and `apt-build-dep`
+
+- Basic tools (python, fish-shell, xmonad/xmobar)
+- Media: vlc, ffmpeg
+- EE: kicad, gerbv
+- Missing google-chrome; download from Chrome's website
 
 python
 ------
@@ -33,7 +40,7 @@ python
 - numpy, matplotlib, pandas, scipy
 - requests, httpie
 - ipython, virtualenv
-- ...and so much more!
+- (Relatively unmaintained)
 
 Xmonad
 ------
@@ -55,6 +62,5 @@ Xmobar
 ------
 `xmobarrc`
 
-- Tango color palette (to match my terminals), dark on light-grey
-- Battery | CPU | Memory | Top ... Weather (KBOS) | WiFi | Date
-- (I really wish xmobar used normal Haskell files to configure!)
+- Tango color palette, dark on light-grey
+- Battery | CPU | Memory | Top ... Mz | Weather (KBOS) | WiFi | Date
