@@ -12,7 +12,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%battery% | Cpu: %coretemp% %multicpu% | %memory% | %top% }{ Mz: %mz% | %KBOS% | %wlan0wi% | %date% "
+   , template = "%battery% | Cpu: %coretemp% %multicpu% | %memory% | %top% }{ %KNYC% | %wlan0wi% | %date% "
 
    -- general behavior
    , lowerOnStart =     False    -- send to bottom of window stack on start
@@ -39,7 +39,7 @@ Config {
    , commands = 
 
     -- weather monitor
-    [ Run Weather "KBOS" [ "--template", "Weather: <skyCondition> <fc=#204a87><tempF></fc>°F <fc=#204a87><rh></fc>% " -- sky blue dark
+    [ Run Weather "KNYC" [ "--template", "Weather: <skyCondition> <fc=#204a87><tempF></fc>°F <fc=#204a87><rh></fc>% " -- sky blue dark
                             ] 1000
 
     -- network activity monitor (dynamic interface resolution)
@@ -106,7 +106,7 @@ Config {
 
     , Run Wireless "wlan0" ["--template", "WiFi: <essid> <fc=#888a85><qualityvbar></fc>" ] 1000
 
-    , Run Com "mz" ["cur"] "mz" 25
+    --, Run Com "mz" ["cur"] "mz" 25
     -- aluminum 4
     ]
 }

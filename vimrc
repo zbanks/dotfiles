@@ -2,6 +2,8 @@
 " Maintainer:   Tim Pope <http://tpo.pe/>
 " Version:      1.0
 
+execute pathogen#infect()
+
 if exists('g:loaded_sensible') || &compatible
   finish
 else
@@ -100,6 +102,12 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
+nnoremap gp :E<CR>
+nnoremap gc :e %<.c<CR>
+nnoremap gh :e %<.h<CR>
+nnoremap gC :e %<.cpp<CR>
+
 set mouse=a
+set clipboard=unnamedplus
 
 " vim:set ft=vim et sw=2:

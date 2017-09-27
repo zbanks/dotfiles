@@ -12,7 +12,7 @@ import System.Exit
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop
 import XMonad.Hooks.ManageDocks
---import XMonad.Util.SpawnOnce
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Run(spawnPipe)
@@ -72,7 +72,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["web","bash", "vim", "lin","mz","6","7","8","9","0", "-", "=", "~"]
+myWorkspaces    = ["web", "2","3","4","5","6","7","8","9","0", "-", "=", "ctl"] -- ctl is ~
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -132,6 +132,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
     [ ((modm              , xK_Return), spawn $ XMonad.terminal conf)
+    , ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     --, ((modm              , xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
@@ -271,8 +272,9 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts ( smartBorders tiled ||| Mirror tiled ||| noBorders Full)
+myLayout = avoidStruts ( smartBorders tiled ||| Mirror tiled ||| noBorders Full ||| radiance)
   where
+     radiance = Mirror $ Tall 1 0 (782/1080)
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
 
@@ -300,16 +302,17 @@ myLayout = avoidStruts ( smartBorders tiled ||| Mirror tiled ||| noBorders Full)
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+-- | Move the window to a given workspace
+doSink = ask >>= \w -> doF (W.sink w)
+--doSwapMaster = ask >>= \w -> doF (W.swapMaster w)
+
 myManageHook = composeAll
     [ manageHook gnomeConfig
-    --, className =? "Google-chrome"  --> doShift "web"
-    --, className =? "Gvim"           --> doShift "vim"
-    --, className =? "Linerva"        --> doShift "lin"
-    --, className =? "Musicazoo"      --> doShift "mz"
-    --, className =? "MainTerminal"   --> doShift "bash"
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "Do"             --> doIgnore
+    , className =? "radiance"       --> doSink
+    , className =? "radiance"       --> doF W.swapMaster
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , isFullscreen                  --> doFullFloat ] <+> manageDocks
@@ -347,15 +350,14 @@ myLogHookWithPP pp = do
 -- By default, do nothing.
 myStartupHook = do
     -- spawnOnce "google-chrome"
-    --, spawnOnce "gvim"
-    --, spawnOnce "gnome-terminal --class=MainTerminal"
-    --, spawnOnce "gnome-terminal --class=Linerva -e ssh linerva -K"
-    --, spawnOnce "gnome-terminal --class=Musicazoo -e ssh musicazoo -K"
 
       spawn "xmodmap -e 'remove Lock = Caps_Lock'"
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
-      spawn "xmobar"
+      --spawn "xmobar"
+      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'alsamixer -c1'"
+      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'watch -n10 acpi -V'"
+      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e nmtui"
       gnomeRegister
       startupHook desktopConfig 
 
