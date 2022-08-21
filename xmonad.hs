@@ -312,7 +312,7 @@ myManageHook = composeAll
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "Do"             --> doIgnore
-    , className =? "radiance"       --> doSink
+    -- , className =? "radiance"       --> doSink
     , className =? "radiance"       --> doF W.swapMaster
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
@@ -334,11 +334,10 @@ myFocusFollowsMouse = True
 -- > logHook = dynamicLogDzen
 --
 -----------------------------
-
-myLogHookWithPP :: PP -> X ()
-myLogHookWithPP pp = do
-    ewmhDesktopsLogHook
-    dynamicLogWithPP pp
+--myLogHookWithPP :: PP -> X ()
+--myLogHookWithPP pp = do
+--    ewmhDesktopsLogHook
+--    dynamicLogWithPP pp
 
 
 -------------------------------------------
