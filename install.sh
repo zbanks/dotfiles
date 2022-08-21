@@ -1,5 +1,6 @@
 #!/bin/bash
 ln -s -bi $PWD/vimrc ~/.vimrc
+mkdir -p ~/.vim/swap ~/.vim/backups
 
 mkdir -p ~/.config/fish/
 ln -sbi $PWD/config.fish ~/.config/fish/config.fish

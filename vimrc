@@ -2,7 +2,7 @@
 " Maintainer:   Tim Pope <http://tpo.pe/>
 " Version:      1.0
 
-execute pathogen#infect()
+" execute pathogen#infect()
 
 if exists('g:loaded_sensible') || &compatible
   finish
@@ -91,27 +91,36 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
 
+" Insert unicode
 inoremap <C-U> <C-G>u<C-U>
 
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+" set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
 set number
 
+" j/k to scroll visual lines
 nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
+" view directory of current file
 nnoremap gp :E<CR>
+
+" switch betwen .c/.h/.cpp/.hpp files with same name
 nnoremap gc :e %<.c<CR>
 nnoremap gh :e %<.h<CR>
 nnoremap gC :e %<.cpp<CR>
+nnoremap gH :e %<.hpp<CR>
 
 set mouse=a
 set clipboard=unnamedplus
 
+" Show unusual whitespace characters
 set list
-set listchars=tab:>-
+set listchars=tab:»·,trail:·,nbsp:·
+
+" Store swapfiles in a special directory (not next to the files)
 set directory=$HOME/.vim/swap/
 set backupdir=$HOME/.vim/backups/
 
