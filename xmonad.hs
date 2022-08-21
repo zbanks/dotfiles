@@ -195,13 +195,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- Lock screen
-    , ((modm .|. shiftMask, xK_l     ), spawn "gnome-screensaver-command -l")
+    , ((modm .|. shiftMask, xK_l     ), spawn "light-locker-command -l")
 
     -- Suspend
-    , ((modm .|. shiftMask, xK_s     ), spawn "sudo pm-suspend")
+    , ((modm .|. shiftMask, xK_s     ), spawn "systemctl suspend")
 
     -- Hibernate
-    , ((modm .|. shiftMask, xK_h     ), spawn "sudo pm-hibernate")
+    , ((modm .|. shiftMask, xK_h     ), spawn "systemctl hibernate")
 
     --, ((modm,               xK_z     ), spawn "export DISPLAY=:0; /home/zbanks/autoclick ")
 
@@ -209,7 +209,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- toggle the status bar gap (used with avoidStruts from Hooks.ManageDocks)
     -- , ((modm , xK_b ), sendMessage ToggleStruts)
 
-    , ((modm .|. shiftMask, xK_o    ), spawn myDmenuTitleBar)
+    -- , ((modm .|. shiftMask, xK_o    ), spawn myDmenuTitleBar)
 
     -- Quit xmonad
     --, ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
@@ -354,6 +354,7 @@ myStartupHook = do
       spawn "xmodmap -e 'remove Lock = Caps_Lock'"
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
+      spawn "light-locker"
       --spawn "xmobar"
       --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'alsamixer -c1'"
       --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'watch -n10 acpi -V'"
