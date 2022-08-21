@@ -225,10 +225,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
+    -- mod-ctl-[1..9], Swap current workspace with N
     --
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9]++[xK_0, xK_minus, xK_equal, xK_grave])
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask), (swapWithCurrent, controlMask)]]
     ++
 
     --
@@ -237,11 +238,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
-    ++
-    [((modm .|. controlMask, k), windows $ swapWithCurrent i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 ..]]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask), (swapWithCurrent, controlMask)]]
 
 
 ------------------------------------------------------------------------
@@ -257,6 +254,9 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask .|. shiftMask, button3), (\w -> focus w >> mouseResizeWindow w))
+
+    -- control-click, same as above
+    , ((modMask .|. controlMask, button1), (\w -> focus w >> mouseResizeWindow w))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
@@ -308,6 +308,7 @@ doSink = ask >>= \w -> doF (W.sink w)
 
 myManageHook = composeAll
     [ manageHook gnomeConfig
+    , title =? "Snes9x: Linux"      --> doShift "-"
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "Do"             --> doIgnore
@@ -355,9 +356,9 @@ myStartupHook = do
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
       --spawn "xmobar"
-      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'alsamixer -c1'"
-      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'watch -n10 acpi -V'"
-      spawnOn "ctl" "gnome-terminal --class=CtlTerm -e nmtui"
+      --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'alsamixer -c1'"
+      --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'watch -n10 acpi -V'"
+      --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e nmtui"
       gnomeRegister
       startupHook desktopConfig 
 

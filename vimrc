@@ -110,4 +110,9 @@ nnoremap gC :e %<.cpp<CR>
 set mouse=a
 set clipboard=unnamedplus
 
+set list
+set listchars=tab:>-
+set directory=$HOME/.vim/swap/
+set backupdir=$HOME/.vim/backups/
+
 " vim:set ft=vim et sw=2:
