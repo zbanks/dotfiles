@@ -124,4 +124,8 @@ set listchars=tab:»·,trail:·,nbsp:·
 set directory=$HOME/.vim/swap/
 set backupdir=$HOME/.vim/backups/
 
+" Turn on spell for texty formats
+autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
+
 " vim:set ft=vim et sw=2:

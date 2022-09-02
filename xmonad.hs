@@ -195,7 +195,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- Lock screen
-    , ((modm .|. shiftMask, xK_l     ), spawn "light-locker-command -l")
+    --, ((modm .|. shiftMask, xK_l     ), spawn "light-locker-command -l")
 
     -- Suspend
     , ((modm .|. shiftMask, xK_s     ), spawn "systemctl suspend")
@@ -354,7 +354,7 @@ myStartupHook = do
       spawn "xmodmap -e 'remove Lock = Caps_Lock'"
       spawn "xmodmap -e 'keysym Caps_Lock = Escape'"
       spawn "setxkbmap -option caps:escape"
-      spawn "light-locker"
+      --spawn "light-locker"
       --spawn "xmobar"
       --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'alsamixer -c1'"
       --spawnOn "ctl" "gnome-terminal --class=CtlTerm -e 'watch -n10 acpi -V'"
