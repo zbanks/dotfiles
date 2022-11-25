@@ -31181,7 +31181,7 @@ fe80::1%lo0 ads.pubmatic.com
 0.0.0.0 clickcompare.co.uk
 0.0.0.0 clickdensity.com
 0.0.0.0 clickhereforcellphones.com
-0.0.0.0 clickhouse.com
+#0.0.0.0 clickhouse.com
 0.0.0.0 clickhype.com
 0.0.0.0 clicklink.jp
 0.0.0.0 clickonometrics.pl

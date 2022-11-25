@@ -141,6 +141,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gnome-do
     --, ((modm              , xK_p     ), spawn "gnome-do")
 
+    -- Monitor management
+    , ((modm              , xK_i     ), spawn "xrandr --output eDP-1 --auto --output DP-3 --auto --right-of eDP-1")
+    , ((modm .|. shiftMask, xK_i     ), spawn "xrandr --output eDP-1 --auto --output DP-3 --auto --same-as eDP-1")
+    , ((modm .|. controlMask, xK_i     ), spawn "xrandr --output eDP-1 --auto --output DP-3 --off")
+
     -- close focused window 
     , ((modm .|. shiftMask, xK_c     ), kill)
     
