@@ -146,13 +146,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_i     ), spawn "xrandr --output eDP-1 --auto --output DP-3 --auto --same-as eDP-1")
     , ((modm .|. controlMask, xK_i     ), spawn "xrandr --output eDP-1 --auto --output DP-3 --off")
 
+    -- VPN management
+    , ((modm              , xK_u     ), spawn "nmcli connection up firewall-01-UDP4-9999-zach-home-01 passwd-file ~/.vpn/firewall-01-UDP4-9999-zach-home-01/pwfile")
+    , ((modm .|. shiftMask, xK_u     ), spawn "nmcli connection down firewall-01-UDP4-9999-zach-home-01")
+
     -- close focused window 
     , ((modm .|. shiftMask, xK_c     ), kill)
     
-    -- Musicazoo
-    , ((shiftMask, xF86XK_AudioRaiseVolume    ), spawn "mz vol up > /dev/null")
-    , ((shiftMask, xF86XK_AudioLowerVolume    ), spawn "mz vol down > /dev/null")
-    , ((shiftMask, xF86XK_AudioMute    ), spawn "mz skip > /dev/null")
+    -- Musicazoo (R.I.P. 2012 -- 2015)
+    -- , ((shiftMask, xF86XK_AudioRaiseVolume    ), spawn "mz vol up > /dev/null")
+    -- , ((shiftMask, xF86XK_AudioLowerVolume    ), spawn "mz vol down > /dev/null")
+    -- , ((shiftMask, xF86XK_AudioMute    ), spawn "mz skip > /dev/null")
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
